@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper  namespace="com.xwolf.boot.dao.IUserDao" >
+     <resultMap id="baseResultMap" type="com.xwolf.boot.entity.User" >
+         <id column="uid" jdbcType="INTEGER" property="uid"/>
+         <result column="uname" property="uname" jdbcType="VARCHAR"/>
+         <result column="birth" property="birth" jdbcType="TIMESTAMP"/>
+     </resultMap>
+
+    <sql id="Base_Column">
+                  uid,uname,birth
+    </sql>
+    <insert id="insert" parameterType="com.xwolf.boot.entity.User" >
+        insert into user (uid, uname,birth)
+        values (#{uid,jdbcType=INTEGER},  #{uname,jdbcType=VARCHAR},#{birth,jdbcType=TIMESTAMP})
+    </insert>
+
+    <select id="queryList" resultMap="baseResultMap" >
+     select <include refid="Base_Column"/>  from  user
+    </select>
+</mapper>

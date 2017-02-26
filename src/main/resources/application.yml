@@ -1,0 +1,48 @@
+spring:
+  application:
+    name: boot
+
+  http:
+    encoding:
+      force: true
+      charset: UTF-8
+      enabled: true
+ #指定项目的运行环境,可自动启用或停止某些功能
+  profiles:
+    active: dev
+
+
+datasource:
+   druid:
+      url: jdbc:mysql://127.0.0.1:3306/wifi2?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&createDatabaseIfNotExist=true
+      username: eap
+      password: eap@eap
+      filters: stat,slf4j
+      initialSize: 10
+      maxActive: 100
+      maxWait: 60000
+      minIdle: 5
+      timeBetweenEvictionRunsMillis: 60000
+      minEvictableIdleTimeMillis: 300000
+      validationQuery: SELECT 'x'
+      testWhileIdle: true
+      testOnBorrow: false
+      testOnReturn: false
+      poolPreparedStatements: true
+      maxPoolPreparedStatementPerConnectionSize: 20
+logging:
+  config: classpath:logback.xml
+   #  file: d:/logs/boot.log
+
+server:
+  port: 8080
+  session:
+    timeout: 30
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.xwolf.boot.entity
+  check-config-location: true
+  config-location: classpath:mybatis.xml
+
+
