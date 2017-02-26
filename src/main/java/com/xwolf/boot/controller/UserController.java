@@ -28,7 +28,7 @@ public class UserController {
     @Autowired
     private IUserService userService;
 
-    @RequestMapping("add")
+    @RequestMapping(value = "add",method = RequestMethod.POST)
     @ResponseBody
     public String insert(@RequestParam(value = "name",defaultValue = "")String name){
         User user = new User();
@@ -38,7 +38,7 @@ public class UserController {
          return userService.insert(user);
     }
 
-    @RequestMapping("list/{start}/{size}")
+    @RequestMapping(value = "list/{start}/{size}",method = RequestMethod.POST)
     public PageInfo<User> getUserList(@PathVariable("start")int start,@PathVariable("size")int size){
         PageHelper.startPage(start,size);
        List<User> list= userService.getList();
