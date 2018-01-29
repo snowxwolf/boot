@@ -1,5 +1,6 @@
 package com.xwolf.boot.controller;
 
+import com.google.common.collect.Maps;
 import com.xwolf.boot.entity.User;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -9,20 +10,20 @@ import org.springframework.web.bind.annotation.*;
 import java.util.*;
 
 /**
- * <p>
- * </p>
- *
+ * Swagger API测试Controller,无明确时限,以Map代替CRUD
  * @author xwolf
  * @date 2017-02-26 20:15
- * @since V1.0.0
+ * @since 1.8
+ * @version 1.0.0
  */
 @RestController
 @RequestMapping(value="/api")
 public class ApiController {
-    static Map<Integer, User> users = Collections.synchronizedMap(new HashMap<Integer, User>());
+
+    private static Map<Integer, User> users = Maps.newConcurrentMap();
 
     @ApiOperation(value="获取用户列表", notes="")
-    @RequestMapping(value={""}, method=RequestMethod.GET)
+    @GetMapping(value={"/list"})
     public List<User> getUserList() {
         List<User> r = new ArrayList<User>(users.values());
         return r;
@@ -30,7 +31,7 @@ public class ApiController {
 
     @ApiOperation(value="创建用户", notes="根据User对象创建用户")
     @ApiImplicitParam(name = "user", value = "用户详细实体user", required = true, dataType = "User")
-    @RequestMapping(value="", method=RequestMethod.POST)
+    @PostMapping(value="/add")
     public String postUser(@RequestBody User user) {
         users.put(user.getUid(), user);
         return "success";
@@ -56,6 +57,11 @@ public class ApiController {
         return "success";
     }
 
+    /**
+     * 删除用户
+     * @param id 用户ID
+     * @return
+     */
     @ApiOperation(value="删除用户", notes="根据url的id来指定删除对象")
     @ApiImplicitParam(name = "id", value = "用户ID", required = true, dataType = "Integer")
     @RequestMapping(value="/{id}", method=RequestMethod.DELETE)

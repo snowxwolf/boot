@@ -13,11 +13,11 @@
                   uid,uname,birth
     </sql>
     <insert id="insert" parameterType="com.xwolf.boot.entity.User" >
-        insert into user (uid, uname,birth)
-        values (#{uid,jdbcType=INTEGER},  #{uname,jdbcType=VARCHAR},#{birth,jdbcType=TIMESTAMP})
+        INSERT INTO user (uid, uname,birth)
+        VALUES (#{uid,jdbcType=INTEGER},  #{uname,jdbcType=VARCHAR},#{birth,jdbcType=TIMESTAMP})
     </insert>
 
     <select id="queryList" resultMap="baseResultMap" >
-     select <include refid="Base_Column"/>  from  user
+     SELECT <include refid="Base_Column"/>  FROM  user
     </select>
 </mapper>

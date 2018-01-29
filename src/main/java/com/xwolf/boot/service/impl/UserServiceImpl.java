@@ -11,9 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * <p>
- * </p>
- *
+ * 用户Service
  * @author xwolf
  * @date 2017-02-25 09:17
  * @since V1.0.0
@@ -21,9 +19,15 @@ import java.util.List;
 @Slf4j
 @Service
 public class UserServiceImpl implements IUserService {
+
     @Autowired
     private IUserDao userDao;
 
+    /**
+     * 新增用户
+     * @param user 用户信息
+     * @return
+     */
     @Override
     public String insert(User user) {
         int resultInt=userDao.insert(user);
@@ -38,6 +42,10 @@ public class UserServiceImpl implements IUserService {
         return result.toJSONString();
     }
 
+    /**
+     * 获取用户列表
+     * @return
+     */
     @Override
     public List<User> getList() {
         return userDao.queryList();

@@ -5,12 +5,10 @@ import com.xwolf.boot.entity.User;
 import java.util.List;
 
 /**
- * <p>
- * </p>
- *
  * @author xwolf
  * @date 2017-02-25 09:16
- * @since V1.0.0
+ * @since 1.8
+ * @version 1.0.0
  */
 public interface IUserService {
 

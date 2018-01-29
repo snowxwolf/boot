@@ -7,16 +7,19 @@ spring:
       force: true
       charset: UTF-8
       enabled: true
- #指定项目的运行环境,可自动启用或停止某些功能
+
   profiles:
     active: dev
 
+  jackson:
+    date-format: YYYY-MM-DD
+    joda-date-time-format: YYYY-MM-DD HH:mm:ss
 
 datasource:
    druid:
       url: jdbc:mysql://127.0.0.1:3306/wifi2?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&createDatabaseIfNotExist=true
-      username: eap
-      password: eap@eap
+      username: eop
+      password: eop@eop
       filters: stat,slf4j
       initialSize: 10
       maxActive: 100
@@ -30,14 +33,13 @@ datasource:
       testOnReturn: false
       poolPreparedStatements: true
       maxPoolPreparedStatementPerConnectionSize: 20
-logging:
-  config: classpath:logback.xml
-   #  file: d:/logs/boot.log
 
 server:
-  port: 8080
+  port: 8082
   session:
     timeout: 30
+
+
 
 mybatis:
   mapper-locations: classpath:mapper/*.xml
@@ -45,4 +47,5 @@ mybatis:
   check-config-location: true
   config-location: classpath:mybatis.xml
 
-
+logging:
+  config: classpath:logback.xml

@@ -12,17 +12,16 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 /**
  * <p>
- *     swigger 整合管理API接口
- *   参考<url>http://www.jianshu.com/p/8033ef83a8ed</url>
+ * swagger 整合管理API接口
+ * 参考<url>http://www.jianshu.com/p/8033ef83a8ed</url>
  * </p>
- *
  * @author xwolf
  * @date 2017-02-26 20:12
  * @since V1.0.0
  */
 @Configuration
 @EnableSwagger2
-public class SwiggerConfig {
+public class SwaggerConfig {
     @Bean
     public Docket createRestApi() {
         return new Docket(DocumentationType.SWAGGER_2)

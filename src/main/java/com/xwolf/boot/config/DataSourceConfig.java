@@ -17,12 +17,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * <p>
- * </p>
- *
+ * 数据源
  * @author xwolf
  * @date 2017-02-25 08:14
- * @since V1.0.0
+ * @since 1.8
+ * @version 1.0.0
  */
 @Configuration
 public class DataSourceConfig {
