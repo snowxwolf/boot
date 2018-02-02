@@ -25,6 +25,11 @@ public class UserController {
     @Autowired
     private IUserService userService;
 
+    /**
+     * 添加用户
+     * @param user
+     * @return
+     */
     @PostMapping(value = "add")
     public String insert(@Valid User user){
         // user.setBirth(new Date());
@@ -32,6 +37,12 @@ public class UserController {
         return userService.insert(user);
     }
 
+    /**
+     * 获取用户列表
+     * @param start
+     * @param size
+     * @return
+     */
     @GetMapping(value = "list/{start}/{size}")
     public List<User> getUserList(@PathVariable("start")int start,@PathVariable("size")int size){
        PageHelper.startPage(start,size);

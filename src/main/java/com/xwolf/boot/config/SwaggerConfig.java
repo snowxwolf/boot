@@ -13,11 +13,12 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 /**
  * <p>
  * swagger 整合管理API接口
- * 参考<url>http://www.jianshu.com/p/8033ef83a8ed</url>
+ * 参考<url href="http://www.jianshu.com/p/8033ef83a8ed">http://www.jianshu.com/p/8033ef83a8ed</url>
  * </p>
  * @author xwolf
  * @date 2017-02-26 20:12
- * @since V1.0.0
+ * @since 1.8
+ * @version 1.0.0
  */
 @Configuration
 @EnableSwagger2
@@ -35,8 +36,7 @@ public class SwaggerConfig {
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 .title("Spring Boot中使用Swagger2构建RESTful APIs")
-                .description("更多Spring Boot相关文章请关注：http://blog.didispace.com/")
-                .termsOfServiceUrl("http://blog.didispace.com/")
+                .description("Swagger API 接口文档")
                 .contact("程序猿")
                 .version("1.0")
                 .build();
