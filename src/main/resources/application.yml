@@ -1,7 +1,6 @@
 spring:
   application:
     name: boot
-
   http:
     encoding:
       force: true
@@ -15,32 +14,6 @@ spring:
     date-format: YYYY-MM-DD
     joda-date-time-format: YYYY-MM-DD HH:mm:ss
 
-datasource:
-   druid:
-      url: jdbc:mysql://127.0.0.1:3306/wifi2?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&createDatabaseIfNotExist=true
-      username: eop
-      password: eop@eop
-      filters: stat,slf4j
-      initialSize: 10
-      maxActive: 100
-      maxWait: 60000
-      minIdle: 5
-      timeBetweenEvictionRunsMillis: 60000
-      minEvictableIdleTimeMillis: 300000
-      validationQuery: SELECT 'x'
-      testWhileIdle: true
-      testOnBorrow: false
-      testOnReturn: false
-      poolPreparedStatements: true
-      maxPoolPreparedStatementPerConnectionSize: 20
-
-server:
-  port: 8082
-  session:
-    timeout: 30
-
-
-
 mybatis:
   mapper-locations: classpath:mapper/*.xml
   type-aliases-package: com.xwolf.boot.entity
@@ -49,3 +22,56 @@ mybatis:
 
 logging:
   config: classpath:logback.xml
+
+server:
+  port: 8082
+  session:
+    timeout: 1800
+  connection-timeout:  60000
+  display-name: Boot Application
+
+---
+spring:
+   profiles: dev
+   datasource:
+     driver-class-name: com.mysql.jdbc.Driver
+     username: eop
+     url: jdbc:mysql://127.0.0.1:3306/wifi2?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&createDatabaseIfNotExist=true
+     password: eop@eop
+     type:  com.alibaba.druid.pool.DruidDataSource
+     druid:
+       filters: config
+       maxActive: 50
+       initialSize: 10
+       maxWait: 60000
+       minIdle: 1
+       timeBetweenEvictionRunsMillis: 60000
+       minEvictableIdleTimeMillis: 300000
+       validationQuery: select 'x'
+       testWhileIdle: true
+       testOnBorrow: false
+       testOnReturn: false
+       connectionProperties: config.decrypt=false;config.decrypt.key=MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAMBqy+oGF0DhV2jiHyilb4mowR4mgQL4FSE0+GvlstTqYanSnJXYHmAffYVNO7lsAq4KU0K3Xh9e6qtGdAevFq0CAwEAAQ==
+
+---
+spring:
+   profiles: test
+   datasource:
+     driver-class-name: com.mysql.jdbc.Driver
+     username: eop
+     url: jdbc:mysql://127.0.0.1:3306/wifi2?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&createDatabaseIfNotExist=true
+     password: eop@eop
+     type:  com.alibaba.druid.pool.DruidDataSource
+     druid:
+       filters: config
+       maxActive: 50
+       initialSize: 10
+       maxWait: 60000
+       minIdle: 1
+       timeBetweenEvictionRunsMillis: 60000
+       minEvictableIdleTimeMillis: 300000
+       validationQuery: select 'x'
+       testWhileIdle: true
+       testOnBorrow: false
+       testOnReturn: false
+       connectionProperties: config.decrypt=false;config.decrypt.key=MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAMBqy+oGF0DhV2jiHyilb4mowR4mgQL4FSE0+GvlstTqYanSnJXYHmAffYVNO7lsAq4KU0K3Xh9e6qtGdAevFq0CAwEAAQ==

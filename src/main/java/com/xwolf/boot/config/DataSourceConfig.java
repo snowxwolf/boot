@@ -4,16 +4,21 @@ import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.support.http.StatViewServlet;
 import com.alibaba.druid.support.http.WebStatFilter;
 import com.google.common.collect.Lists;
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import com.google.common.collect.Maps;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.boot.bind.RelaxedPropertyResolver;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
+import org.springframework.context.ApplicationContextException;
+import org.springframework.context.EnvironmentAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
-import org.springframework.jdbc.datasource.DataSourceTransactionManager;
-import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.core.env.Environment;
+import org.springframework.util.StringUtils;
 
-import java.util.HashMap;
+import javax.sql.DataSource;
+import java.sql.SQLException;
 import java.util.Map;
 
 /**
@@ -24,43 +29,79 @@ import java.util.Map;
  * @version 1.0.0
  */
 @Configuration
-public class DataSourceConfig {
+public class DataSourceConfig implements EnvironmentAware{
 
-    @ConfigurationProperties(prefix = "datasource.druid")
-    @Bean(name="datasource",initMethod = "init",destroyMethod = "close")
-    public DruidDataSource getDataSource(){
-         return new DruidDataSource();
+    private static final Logger log = LoggerFactory.getLogger(DataSourceConfig.class);
+
+    private RelaxedPropertyResolver prop;
+
+    private Environment environment;
+
+    @Override
+    public void setEnvironment(Environment environment) {
+        this.environment = environment;
+        this.prop = new RelaxedPropertyResolver(environment,"spring.datasource.");
     }
 
-    @Bean
-    public PlatformTransactionManager transactionManager(){
-        return new DataSourceTransactionManager(getDataSource());
+    /**
+     * 数据库连接池配置
+     * @return
+     */
+    @Bean(initMethod="init",destroyMethod="close",name="dataSource")
+    public DataSource dataSource(){
+        log.info("数据库连接池配置中......");
+        if (StringUtils.isEmpty(prop.getProperty("url"))) {
+            throw new ApplicationContextException("数据库连接池url配置错误.");
+        }else{
+            DruidDataSource druid=new DruidDataSource();
+            druid.setUrl(prop.getProperty("url"));
+            druid.setUsername(prop.getProperty("username"));
+            druid.setPassword(prop.getProperty("password"));
+            druid.setDriverClassName(prop.getProperty("driverClassName"));
+            druid.setInitialSize(Integer.valueOf(prop.getProperty("druid.initialSize")));
+            druid.setMinIdle(Integer.valueOf(prop.getProperty("druid.minIdle")));
+            druid.setMaxActive(Integer.valueOf(prop.getProperty("druid.maxActive")));
+            druid.setMaxWait(Integer.valueOf(prop.getProperty("druid.maxWait")));
+            druid.setTimeBetweenConnectErrorMillis(Long.valueOf(prop.getProperty("druid.timeBetweenEvictionRunsMillis")));
+            druid.setMinEvictableIdleTimeMillis(Long.valueOf(prop.getProperty("druid.minEvictableIdleTimeMillis")));
+            druid.setValidationQuery(prop.getProperty("druid.validationQuery"));
+            druid.setTestWhileIdle(Boolean.parseBoolean(prop.getProperty("druid.testWhileIdle")));
+            druid.setTestOnBorrow(Boolean.parseBoolean(prop.getProperty("druid.testOnBorrow")));
+            druid.setTestOnReturn(Boolean.parseBoolean(prop.getProperty("druid.testOnReturn")));
+            druid.setConnectionProperties(prop.getProperty("druid.connectionProperties"));
+            try {
+                druid.setFilters(prop.getProperty("druid.filter"));
+            } catch (SQLException e) {
+                log.error("druid数据库连接池初始化异常");
+            }
+            return druid;
+        }
     }
 
-    // 指定环境下dev 开启监控
+    /**
+     * 静态资源过滤
+     * @return
+     */
     @Bean
-    @Profile("dev")
-    public FilterRegistrationBean druidFilter() {
-        FilterRegistrationBean registration = new FilterRegistrationBean();
-        registration.setFilter(new WebStatFilter());
-        Map<String, String> intParams = new HashMap<>();
-        intParams.put("exclusions", "*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*");
-        registration.setName("DruidWebStatFilter");
-        registration.setUrlPatterns(Lists.newArrayList("/*"));
-        registration.setInitParameters(intParams);
-        return registration;
+    public FilterRegistrationBean filterRegistrationBean() {
+        FilterRegistrationBean fr = new FilterRegistrationBean();
+        fr.setFilter(new WebStatFilter());
+        fr.addUrlPatterns("/*");
+        fr.addInitParameter("exclusions", "*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*");
+        return fr;
     }
 
-     //数据源监控
+    /**
+     * 数据源监控
+     */
     @Bean
-    @Profile("dev")
     public ServletRegistrationBean servletRegistrationBean() {
         ServletRegistrationBean registration = new ServletRegistrationBean();
         registration.setServlet(new StatViewServlet());
-        registration.setName("druid");
+        registration.setName("druidMonitor");
         registration.setUrlMappings(Lists.newArrayList("/druid/*"));
         //自定义添加初始化参数
-        Map<String, String> intParams = new HashMap<>();
+        Map<String, String> intParams = Maps.newHashMap();
         intParams.put("loginUsername","druid");
         intParams.put("loginPassword","druid");
         registration.setName("DruidWebStatFilter");
