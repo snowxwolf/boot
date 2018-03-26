@@ -30,7 +30,4 @@ public class StringUtils {
         return !isBlank(str);
     }
 
-    public static void main(String[] args) {
-        System.out.println(isBlank("    "));
-    }
 }
