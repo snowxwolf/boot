@@ -41,6 +41,7 @@ public class ApiController implements ApiBaseController {
     public User getUser(@PathVariable Integer id) {
         return users.get(id);
     }
+
     @Override
     @PutMapping(value="/{id:\\d+}")
     public String putUser(@PathVariable Integer id, @RequestBody User user) {
