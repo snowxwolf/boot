@@ -1,6 +1,7 @@
 package com.xwolf.boot.controller;
 
 import com.github.pagehelper.PageHelper;
+import com.xwolf.boot.annotation.AvoidRepeatableCommit;
 import com.xwolf.boot.entity.User;
 import com.xwolf.boot.service.IUserService;
 import lombok.extern.slf4j.Slf4j;
@@ -31,6 +32,7 @@ public class UserController {
      * @return
      */
     @PostMapping(value = "add")
+    @AvoidRepeatableCommit(timeout = 50000)
     public String insert(@Valid User user){
         // user.setBirth(new Date());
         log.info("请求参数:{}",user);

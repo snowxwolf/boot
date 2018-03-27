@@ -22,4 +22,9 @@ public class Constants {
      * 默认时间格式化
      */
     public static final String TIME_DEFAULT_FORMAT = "HH:mm:ss";
+
+    /**
+     * 重复提交默认时间30000毫秒
+     */
+    public static final long AVOID_REPEATABLE_TIMEOUT = 30000 ;
 }
