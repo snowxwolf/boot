@@ -1,6 +1,7 @@
 package com.xwolf.boot.config;
 
 import com.xwolf.boot.interceptor.CsrfInterceptor;
+import com.xwolf.boot.interceptor.ErrorInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -24,8 +25,21 @@ public class InterceptorConfig extends WebMvcConfigurerAdapter {
         return new CsrfInterceptor();
     }
 
+    /**
+     * 错误拦截
+     * @return
+     */
+    @Bean
+    ErrorInterceptor errorInterceptor(){
+        return new ErrorInterceptor();
+    }
+
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(csrfInterceptor()).addPathPatterns("/");
+
+        registry.addInterceptor(csrfInterceptor()).addPathPatterns("/**");
+
+        registry.addInterceptor(errorInterceptor()).addPathPatterns("/**");
+        super.addInterceptors(registry);
     }
 }

@@ -14,6 +14,19 @@ spring:
     date-format: YYYY-MM-DD
     joda-date-time-format: YYYY-MM-DD HH:mm:ss
 
+  redis:
+    database: 0
+    host: localhost
+    password:
+    port: 6379
+
+  thymeleaf:
+    mode: HTML5
+    encoding: UTF-8
+    prefix: classpath:/templates/
+    suffix: .html
+    cache: false
+    content-type: text/html
 mybatis:
   mapper-locations: classpath:mapper/*.xml
   type-aliases-package: com.xwolf.boot.entity
@@ -21,8 +34,8 @@ mybatis:
   config-location: classpath:mybatis.xml
 
 logging:
-  config: classpath:logback.xml
-
+  level: debug
+  #config: classpath:logback.xml
 server:
   port: 8082
   session:
@@ -35,9 +48,9 @@ spring:
    profiles: dev
    datasource:
      driver-class-name: com.mysql.jdbc.Driver
-     username: eop
-     url: jdbc:mysql://127.0.0.1:3306/wifi2?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&createDatabaseIfNotExist=true
-     password: eop@eop
+     username: boot
+     url: jdbc:mysql://127.0.0.1:3306/boot?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&createDatabaseIfNotExist=true
+     password: 123456
      type:  com.alibaba.druid.pool.DruidDataSource
      druid:
        filters: config
