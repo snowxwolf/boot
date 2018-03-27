@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 /**
+ * XSS过滤器
  * @author xwolf
  * @since 1.8
  */

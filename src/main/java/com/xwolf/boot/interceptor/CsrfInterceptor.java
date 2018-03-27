@@ -15,6 +15,7 @@ import java.util.Arrays;
  * @version 1.0
  * @since 1.8
  */
+
 @Slf4j
 public class CsrfInterceptor implements HandlerInterceptor {
 
@@ -28,7 +29,8 @@ public class CsrfInterceptor implements HandlerInterceptor {
         String userAgent = request.getHeader("User-Agent");
         //此处仅处理referer
         String referer = request.getHeader("Referer");
-        log.info("preHandle request agent={}, referer={}",userAgent,referer);
+        String url = request.getRequestURI();
+        log.info("preHandle request agent={}, referer={},URI={}",userAgent,referer,url);
         boolean contains = true ;
         if ( StringUtils.isNotBlank(referer) ){
 
