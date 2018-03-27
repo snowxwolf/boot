@@ -27,6 +27,7 @@ public class ErrorInterceptor implements HandlerInterceptor {
                           String uri = httpServletRequest.getRequestURI();
                           int status = httpServletResponse.getStatus();
                           log.info("uri={},status={}",uri,status);
+
                           switch (status){
                               case 500:
                                   modelAndView.setViewName("500");
