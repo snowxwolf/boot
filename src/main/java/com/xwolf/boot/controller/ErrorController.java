@@ -31,4 +31,5 @@ public class ErrorController {
     public String error302(){
         return "302";
     }
+
 }

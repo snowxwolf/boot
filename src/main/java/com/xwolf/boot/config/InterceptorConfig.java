@@ -24,7 +24,6 @@ public class InterceptorConfig extends WebMvcConfigurerAdapter {
     CsrfInterceptor csrfInterceptor(){
         return new CsrfInterceptor();
     }
-
     /**
      * 错误拦截
      * @return
