@@ -3,7 +3,6 @@ package com.xwolf.boot.controller;
 import com.google.common.collect.Maps;
 import com.xwolf.boot.api.ApiBaseController;
 import com.xwolf.boot.entity.User;
-import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -16,7 +15,6 @@ import java.util.Map;
  * @since 1.8
  * @version 1.0.0
  */
-@Api(value="api基础接口")
 @RestController
 @RequestMapping(value="/api")
 public class ApiController implements ApiBaseController {
