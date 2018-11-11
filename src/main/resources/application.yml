@@ -34,8 +34,9 @@ mybatis:
   config-location: classpath:mybatis.xml
 
 logging:
-  level: debug
-  #config: classpath:logback.xml
+  level: info
+  config: classpath:logback.xml
+
 server:
   port: 8082
   session:
@@ -48,8 +49,8 @@ spring:
    profiles: dev
    datasource:
      driver-class-name: com.mysql.jdbc.Driver
-     username: boot
-     url: jdbc:mysql://127.0.0.1:3306/boot?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&createDatabaseIfNotExist=true
+     username: eop
+     url: jdbc:mysql://127.0.0.1:3306/test?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&createDatabaseIfNotExist=true
      password: 123456
      type:  com.alibaba.druid.pool.DruidDataSource
      druid:

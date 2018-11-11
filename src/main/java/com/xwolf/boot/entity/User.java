@@ -12,7 +12,6 @@ import java.util.Date;
 /**
  * 用户
  * @author xwolf
- * @date 2017-02-25 09:00
  * @since 1.8
  * @version 1.0.0
  */

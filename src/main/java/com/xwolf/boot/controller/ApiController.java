@@ -3,6 +3,7 @@ package com.xwolf.boot.controller;
 import com.google.common.collect.Maps;
 import com.xwolf.boot.api.ApiBaseController;
 import com.xwolf.boot.entity.User;
+import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -10,12 +11,12 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Swagger API测试Controller,无明确时限,以Map代替CRUD
+ * Swagger API测试Controller,以Map代替CRUD
  * @author xwolf
- * @date 2017-02-26 20:15
  * @since 1.8
  * @version 1.0.0
  */
+@Api(value="api基础接口")
 @RestController
 @RequestMapping(value="/api")
 public class ApiController implements ApiBaseController {
