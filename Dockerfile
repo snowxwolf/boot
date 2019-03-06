@@ -6,7 +6,7 @@ MAINTAINER xwolf
 ENV MIN_HEAP 512m
 ENV MAX_HEAP 2048m
 
-EXPOSE 8980
+EXPOSE 8082
 
 RUN mkdir /opt/jars
 WORKDIR /opt/jars
